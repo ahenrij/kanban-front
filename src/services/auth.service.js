@@ -1,7 +1,7 @@
 import ApiService from './api.service'
 import { TokenService, StorageService } from './storage.service'
 
-class AuthenticationError extends Error {
+class AuthError extends Error {
     constructor(errorCode, message) {
         super(message)
         this.name = this.constructor.name
@@ -19,7 +19,7 @@ const AuthService = {
      * Login the user and store the access token to localStorage via TokenService. 
      * 
      * @returns access_token
-     * @throws AuthenticationError 
+     * @throws AuthError 
     **/
     async login(email, password) {
         
@@ -39,7 +39,7 @@ const AuthService = {
 
             return token
         } catch (error) {
-            throw new AuthenticationError(error.response.status, error.response.data.message)
+            throw new AuthError(error.response.status, error.response.data.message)
         }
     },
 
@@ -48,7 +48,7 @@ const AuthService = {
      * 
      * @param user, Object representation of the new user
      * @returns true if registered, false else.
-     * @throws AuthenticationError
+     * @throws AuthError
      */
     async register(user) {
 
@@ -58,14 +58,14 @@ const AuthService = {
             if (response.status == 200) {
                 return true
             } else if (response.data.includes('SQLIntegrityConstraintViolationException')) {
-                throw new AuthenticationError(response.status, 'Adresse email déjà utilisée.')
+                throw new AuthError(response.status, 'Adresse email déjà utilisée.')
             } else {
                 console.log(response)
-                throw AuthenticationError(response.status, 'Oops ! Une erreur est survenue !')
+                throw AuthError(response.status, 'Oops ! Une erreur est survenue !')
             }
 
         } catch (error) {
-            throw new AuthenticationError(error.response.status, error.response.data.message)
+            throw new AuthError(error.response.status, error.response.data.message)
         }
     },
 
@@ -84,7 +84,7 @@ const AuthService = {
             ApiService.setHeader()
             return token
         } catch (error) {
-            throw new AuthenticationError(error.response.status, error.response.data.message)
+            throw new AuthError(error.response.status, error.response.data.message)
         }
     },
 
@@ -111,4 +111,4 @@ export function isLoggedIn() {
 
 export default AuthService
 
-export { AuthService, AuthenticationError }
+export { AuthService, AuthError }
