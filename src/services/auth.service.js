@@ -106,7 +106,7 @@ const AuthService = {
 }
 
 export function isLoggedIn() {
-        return TokenService.getToken() !== null
+    return TokenService.getToken() !== null
 }
 
 export default AuthService
