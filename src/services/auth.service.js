@@ -21,7 +21,7 @@ const AuthService = {
      * @returns access_token
      * @throws AuthenticationError 
     **/
-    login: async function(email, password) {
+    async login(email, password) {
         
         try {
             const response = await ApiService.post(LOGIN_URI, {email, password})
@@ -44,9 +44,35 @@ const AuthService = {
     },
 
     /**
+     * Register a new user
+     * 
+     * @param user, Object representation of the new user
+     * @returns true if registered, false else.
+     * @throws AuthenticationError
+     */
+    async register(user) {
+
+        try {
+            const response = await ApiService.post(REGISTER_URI, user)
+
+            if (response.status == 200) {
+                return true
+            } else if (response.data.includes('SQLIntegrityConstraintViolationException')) {
+                throw new AuthenticationError(response.status, 'Adresse email déjà utilisée.')
+            } else {
+                console.log(response)
+                throw AuthenticationError(response.status, 'Oops ! Une erreur est survenue !')
+            }
+
+        } catch (error) {
+            throw new AuthenticationError(error.response.status, error.response.data.message)
+        }
+    },
+
+    /**
      * Refresh the access token.
     **/ 
-    refreshToken: async function() {
+    async refreshToken() {
 
         try {
             const response = await ApiService.get(TOKEN_URI)
