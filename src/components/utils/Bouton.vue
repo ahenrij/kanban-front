@@ -35,6 +35,5 @@ export default {
 </script>
 
 <style scoped>
-    .uk-button-primary {
-    }
+   
 </style>
