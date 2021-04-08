@@ -13,13 +13,13 @@
                 
                 <div v-if="step==1">
                     <div class="uk-width-3-3">
-                        <edit-text :error="formData.lastname.error" v-model="formData.lastname.value" title="Nom" icon="user" type="text" required/>
+                        <edit-text :error="formData.lastname.error" v-model="formData.lastname.value" v-on:input="resetErrors()" title="Nom" icon="user" type="text" required/>
                     </div>
                     <div class="uk-width-3-3">
-                        <edit-text :error="formData.firstname.error" v-model="formData.firstname.value" title="Prénom(s)" icon="user" type="text" required/>
+                        <edit-text :error="formData.firstname.error" v-model="formData.firstname.value" v-on:input="resetErrors()" title="Prénom(s)" icon="user" type="text" required/>
                     </div>
                     <div class="uk-width-3-3">
-                        <edit-text :error="formData.email.error" v-model="formData.email.value" title="Email" icon="mail" type="email" required/>
+                        <edit-text :error="formData.email.error" v-model="formData.email.value" v-on:input="resetErrors()" title="Email" icon="mail" type="email" required/>
                     </div>
                 </div>
 
@@ -27,10 +27,10 @@
                     <a class="uk-text-small link" v-on:click="goToStep(1)">
                         <span uk-icon="icon: arrow-left"></span>Retour</a>
                     <div class="uk-width-3-3 uk-margin-top">
-                        <edit-text :error="formData.password.error" v-model="formData.password.value" title="Mot de passe" icon="lock" type="password" required/>
+                        <edit-text :error="formData.password.error" v-model="formData.password.value" v-on:input="resetErrors()" title="Mot de passe" icon="lock" type="password" required/>
                     </div>
                     <div class="uk-width-3-3">
-                        <edit-text :error="formData.confirmation.error" v-model="formData.confirmation.value" title="Confirmation" icon="lock" type="password" required/>
+                        <edit-text :error="formData.confirmation.error" v-model="formData.confirmation.value" v-on:input="resetErrors()" title="Confirmation" icon="lock" type="password" required/>
                     </div>
                 </div>
                 
@@ -92,6 +92,7 @@ export default {
             if (this.step == 1) {
                 this.goToStep(2)
             } else if (this.step == 2) {
+                delete data.confirmation
                 this.register(data)
             }
         },
@@ -113,13 +114,42 @@ export default {
             let valid = true
             switch (step) {
                 case 1:
-                    if (!this.validEmail(data.email)) {
+
+                    if (data.lastname === '') {
+                        this.formData.lastname.error = 'Champ obligatoire'
+                        valid = false
+                    }
+
+                    if (data.firstname === '') {
+                        this.formData.firstname.error = 'Champ obligatoire'
+                        valid = false
+                    }
+
+                    if (data.email === '') {
+                        this.formData.email.error = 'Champ obligatoire'
+                        valid = false
+                    } else if (!this.validEmail(data.email)) {
                         this.formData.email.error = 'Email invalide'
                         valid = false
                     }
                     break
                 case 2:
                     
+                    if (data.password === '') {
+                        this.formData.password.error = 'Champ obligatoire'
+                        valid = false
+                    }
+
+                    if (data.confirmation === '') {
+                        this.formData.confirmation.error = 'Champ obligatoire'
+                        valid = false
+                    }
+
+                    if (data.password !== data.confirmation) {
+                        this.formData.confirmation.error = 'Mot de passe non identique'
+                        valid = false
+                    }
+
                     break
                 default:
                     valid = false
@@ -142,7 +172,14 @@ export default {
 
         toast: function(type, title, message) {
             this.$notify({ group: 'auth', title: title, type: type, text: message });
-        }
+        },
+
+        resetErrors: function() {
+            // eslint-disable-next-line no-unused-vars
+            for (const [_, value] of Object.entries(this.formData)) {
+                value.error = ''
+            }
+        },
     },
     components: { EditText }
 }
@@ -152,11 +189,5 @@ export default {
 
     .main {
         text-align: left;
-    }
-    .uk-button-primary {
-        background-color: #ffb300;
-    }
-    .link {
-        color: #ffb300;
     }
 </style>

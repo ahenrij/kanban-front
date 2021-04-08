@@ -52,11 +52,11 @@ const actions = {
             return true
 
         } catch (e) {
-            console.log(e)
+            //console.log(e)
             if (e instanceof AuthError) {
                 commit('loginError', { errorCode: e.errorCode, errorMessage: e.message })
             } else {
-                commit('loginError', { errorCode: 400, errorMessage: "Oops! Une erreur est survenue"})
+                commit('loginError', { errorCode: 501, errorMessage: "Oops! Une erreur est survenue"})
             }
             return false
         }
@@ -90,6 +90,31 @@ const actions = {
         }
 
         return state.refreshTokenPromise
+    },
+
+    async register({commit}, user) {
+
+        commit('loginRequest');
+        try {
+            const registered = await AuthService.register(user);
+
+            //update store
+            commit('loginSuccess', null)
+
+            // Redirect the user to login page
+            router.push('/login');
+            
+            return registered
+
+        } catch (e) {
+            console.log(e)
+            if (e instanceof AuthError) {
+                commit('loginError', { errorCode: e.errorCode, errorMessage: e.message })
+            } else {
+                commit('loginError', { errorCode: 400, errorMessage: "Oops! Une erreur est survenue"})
+            }
+            return false
+        }
     }
 }
 
