@@ -52,9 +52,11 @@ const actions = {
             return true
 
         } catch (e) {
+            console.log(e)
             if (e instanceof AuthError) {
-                //console.log(e.message)
                 commit('loginError', { errorCode: e.errorCode, errorMessage: e.message })
+            } else {
+                commit('loginError', { errorCode: 400, errorMessage: "Oops! Une erreur est survenue"})
             }
             return false
         }
@@ -63,7 +65,7 @@ const actions = {
     logout({ commit }) {
         AuthService.logout()
         commit('logoutSuccess')
-        router.push('/')
+        router.push('/home')
     },
 
     refreshToken({ commit, state }) {

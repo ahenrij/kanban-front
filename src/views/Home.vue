@@ -3,7 +3,7 @@
     <div class="container uk-child-width-expand@s" uk-grid>
       
       <div class="uk-flex uk-flex-middle uk-flex-last@s">
-          <img src="@/assets/images/preview.jpg" alt="itresorerie landing">
+          <img src="@/assets/images/scrum_board.svg" alt="Kanban Board">
       </div>
       <div class="uk-flex uk-flex-middle">
           <div class="catching-block">

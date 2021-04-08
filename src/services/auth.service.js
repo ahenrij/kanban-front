@@ -79,7 +79,6 @@ const AuthService = {
 
             const token = response.data.accessToken
             TokenService.saveToken(token)
-            TokenService.saveRefreshToken(token)
             // Update the header in ApiService
             ApiService.setHeader()
             return token
@@ -96,12 +95,10 @@ const AuthService = {
     logout() {
         // Remove the token and remove Authorization header from Api Service as well 
         TokenService.removeToken()
-        TokenService.removeRefreshToken()
         ApiService.removeHeader()
         
         // NOTE: Again, we'll cover the 401 Interceptor a bit later. 
         ApiService.unmount401Interceptor()
-        window.location.reload()
     }
 }
 

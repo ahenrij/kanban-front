@@ -48,8 +48,8 @@ export default {
     computed: {
       ...mapGetters('auth', [
           'authenticating',
-          'authenticationError',
-          'authenticationErrorCode'
+          'authError',
+          'authErrorCode'
       ])
     },
 
@@ -75,8 +75,9 @@ export default {
                         group: 'auth',
                         title: 'Connexion',
                         type: 'error',
-                        text: this.authenticationError
+                        text: this.authError
                     });
+                    console.log(this.authErrorCode)
                 } else {
                     console.log("connected !")
                 }

@@ -3,7 +3,7 @@
     <div class="container uk-child-width-expand@s" uk-grid>
       <div class="container-left uk-flex uk-flex-middle uk-flex-center">
           <div class="">
-              <img class="login-icon" src="@/assets/images/icon.png" alt="">
+              <img class="login-icon" src="@/assets/images/auth.svg" alt="">
           </div>
       </div>
       <div class="uk-flex uk-flex-middle uk-flex-center">
