@@ -18,7 +18,7 @@
 //import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  name: 'Home',
+  name: 'AuthLayout',
   components: {
     
   }
@@ -30,7 +30,7 @@ export default {
     height: 100vh; background-color:#fff
   }
   .container-left {
-    background-color: #FFC107;
+    background-color: #448AFF;
   }
 
   /* Large */

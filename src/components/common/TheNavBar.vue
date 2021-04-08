@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style scoped>
-    .uk-text-bold {
+    * {
         font-family: 'Montserrat' !important;
     }
 
