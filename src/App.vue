@@ -1,13 +1,26 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <the-nav-bar></the-nav-bar>
+    <div class="main" :class="{ 'darkerbg': isLoggedIn() }">  
+      
     </div>
-    <router-view/>
   </div>
 </template>
+<script>
+import { isLoggedIn } from '@/services/auth.service'
+import TheNavBar from '@/components/common/TheNavBar.vue'
 
+export default {
+  
+  methods: {
+    isLoggedIn() {
+      return isLoggedIn()
+    }
+  },
+
+  components: { TheNavBar }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
