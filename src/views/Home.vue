@@ -35,7 +35,7 @@ export default {
     height: 100vh; background-color:#fff; text-align: left;
   }
   .container-left {
-    /*background-color: #FFC107;*/
+    background-color: #448AFF;
   }
   .login-icon {
     height: 400px;
