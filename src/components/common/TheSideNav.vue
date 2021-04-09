@@ -2,7 +2,7 @@
     <div class="sidenav uk-card uk-card-default uk-card-body uk-padding-remove uk-visible@m" style="">
 
         <div class="uk-padding  info-block">
-            <span class="uk-text-lead uk-display-block organization">{{ user.name }}</span>
+            <span class="uk-text-lead uk-display-block organization">{{ user.firstName }} {{ user.lastName }}</span>
             <small class="">{{ user.email }}</small>
         </div>
         
