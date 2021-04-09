@@ -33,15 +33,17 @@ export default {
 }
 </script>
 
+<style>
+    html {
+        background-color: #f6f9fc !important;
+    }
+</style>
+
 <style scoped>
     .content {
         text-align: left;
         padding-top: 80px;
         padding-left: 0px !important;
-    }
-
-    .layout {
-        background-color: #f6f9fc;
     }
 
     @media only screen and (min-width: 960px) {

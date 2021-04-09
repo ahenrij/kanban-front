@@ -40,7 +40,7 @@ export default {
 
 <style scoped>
     a {
-        font-size: 14.5px;
+        font-size: 16px;
         color: #272C2E;
     }
 
