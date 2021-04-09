@@ -18,7 +18,6 @@
             </div>
             <div v-else>
                 <ul class="uk-navbar-nav uk-visible@m uk-margin-right">
-                    <li><router-link to="/profile">{{ user ? user.name : '' }}</router-link></li>
                     <li><router-link class="logout" to="/logout" uk-icon="icon: sign-out"></router-link></li>
                 </ul>
             </div>
@@ -51,7 +50,7 @@ export default {
 
         navbarClass: function() {
             if (this.loggedIn()) { //check from store variable
-                return this.defaultNavbarClass + ' uk-box-shadow-small uk-background-default'
+                return this.defaultNavbarClass + ' uk-box-shadow-small uk-background-primary'
             }
             return this.defaultNavbarClass + ' uk-navbar-transparent';
         },
@@ -79,8 +78,8 @@ export default {
         },
 
         shouldHaveWhiteTitle() {
-            var whiteTitleRoutes = ["Login", "Register"]
-            return whiteTitleRoutes.indexOf(this.$route.name) !== -1
+            var notWhiteTitleRoutes = ["Home", "About"]
+            return notWhiteTitleRoutes.indexOf(this.$route.name) == -1
         },
     },
     components: { TheMobileMenu }

@@ -36,9 +36,12 @@ export default {
 <style scoped>
     .content {
         text-align: left;
-        background-color: #f6f9fc;
         padding-top: 80px;
         padding-left: 0px !important;
+    }
+
+    .layout {
+        background-color: #f6f9fc;
     }
 
     @media only screen and (min-width: 960px) {

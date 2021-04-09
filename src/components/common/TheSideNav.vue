@@ -2,7 +2,7 @@
     <div class="sidenav uk-card uk-card-default uk-card-body uk-padding-remove uk-visible@m" style="">
 
         <div class="uk-padding  info-block">
-            <span class="uk-text-lead uk-display-block organization">{{ user.firstName }} {{ user.lastName }}</span>
+            <span class="uk-text-lead uk-display-block organization">{{ user.firstName }} {{ user.lastName | uppercase }}</span>
             <small class="">{{ user.email }}</small>
         </div>
         
@@ -29,6 +29,12 @@ export default {
             user: StorageService.getUser(),
         }
     },
+
+    filters: {
+        uppercase: function (str) {
+            return str.toUpperCase()
+        },
+    }
 }
 </script>
 
@@ -65,9 +71,11 @@ export default {
 
     li.active {
         background: #fafafa;
+        border-left: solid 3px #448AFF;
     }
 
     li.active > a {
+        color: #448AFF;
         padding-left: 37px !important;
     }
 
