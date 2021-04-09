@@ -95,26 +95,25 @@ const actions = {
     async register({commit}, user) {
 
         commit('loginRequest');
+        var registered = false
         try {
-            const registered = await AuthService.register(user);
+            registered = await AuthService.register(user);
 
+            //IMPORTANT: if returned value then registered is true.
             //update store
             commit('loginSuccess', null)
-
             // Redirect the user to login page
             router.push('/login');
             
-            return registered
-
         } catch (e) {
-            console.log(e)
             if (e instanceof AuthError) {
                 commit('loginError', { errorCode: e.errorCode, errorMessage: e.message })
             } else {
                 commit('loginError', { errorCode: 400, errorMessage: "Oops! Une erreur est survenue"})
             }
-            return false
+            registered = false
         }
+        return registered
     }
 }
 

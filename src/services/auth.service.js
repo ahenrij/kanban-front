@@ -53,14 +53,17 @@ const AuthService = {
     async register(user) {
 
         try {
-            const response = await ApiService.post(REGISTER_URI, user)
+            const response = await ApiService.customRequest({
+                method: 'post',
+                url: REGISTER_URI,
+                data: user
+            })
 
             if (response.status == 200) {
                 return true
             } else if (response.data.includes('SQLIntegrityConstraintViolationException')) {
                 throw new AuthError(response.status, 'Adresse email déjà utilisée.')
             } else {
-                console.log(response)
                 throw AuthError(response.status, 'Oops ! Une erreur est survenue !')
             }
 

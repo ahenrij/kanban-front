@@ -4,7 +4,7 @@
         <div>
             <!--Header-->
             <span class="uk-text-lead">Créez un compte</span><br>
-            <span class="uk-text-light">Et commencez à gérer votre compte de trésorerie</span>
+            <span class="uk-text-light">Et commencez avec votre premier tableau kanban pour votre <br>projet ou vos tâches.</span>
             <notifications style="margin-right: 20px !important; margin-top: 150px  !important" group="auth" />
             <hr class="uk-width-3-3">
 
@@ -13,10 +13,10 @@
                 
                 <div v-if="step==1">
                     <div class="uk-width-3-3">
-                        <edit-text :error="formData.lastname.error" v-model="formData.lastname.value" v-on:input="resetErrors()" title="Nom" icon="user" type="text" required/>
+                        <edit-text :error="formData.lastName.error" v-model="formData.lastName.value" v-on:input="resetErrors()" title="Nom" icon="user" type="text" required/>
                     </div>
                     <div class="uk-width-3-3">
-                        <edit-text :error="formData.firstname.error" v-model="formData.firstname.value" v-on:input="resetErrors()" title="Prénom(s)" icon="user" type="text" required/>
+                        <edit-text :error="formData.firstName.error" v-model="formData.firstName.value" v-on:input="resetErrors()" title="Prénom(s)" icon="user" type="text" required/>
                     </div>
                     <div class="uk-width-3-3">
                         <edit-text :error="formData.email.error" v-model="formData.email.value" v-on:input="resetErrors()" title="Email" icon="mail" type="email" required/>
@@ -41,7 +41,7 @@
                         </small>
                     </div>
                 <div class="uk-width-3-3 uk-margin-small-top">
-                    <button ref="btn-continue" style="width: 100%" type="submit" class="uk-button uk-button-primary" v-on:click="handleSubmit($event)">Continuer</button>
+                    <bouton style="width: 100%" v-on:onClicked="handleSubmit($event)" :loading="this.authenticating" :title="btnContinueTitle" primary/>
                 </div>
                
             </form>
@@ -51,6 +51,7 @@
 
 <script>
 import EditText from '@/components/utils/EditText.vue'
+import Bouton from '@/components/utils/Bouton.vue'
 import * as EmailValidator from 'email-validator'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -58,9 +59,11 @@ export default {
     data: function () {
         return {
             step: 1,
+            title: 'Inscription',
+            btnContinueTitle: 'Continuer',
             formData: {
-                lastname: { value: '', error: '' },
-                firstname: { value: '', error: '' },
+                lastName: { value: '', error: '' },
+                firstName: { value: '', error: '' },
                 email: { value: '', error: '' },
                 password: { value: '', error: '' },
                 confirmation: { value: '', error: '' }
@@ -71,8 +74,8 @@ export default {
     computed: {
         ...mapGetters('auth', [
             'authenticating',
-            'authenticationError',
-            'authenticationErrorCode'
+            'authError',
+            'authErrorCode'
         ])
     },
 
@@ -82,7 +85,7 @@ export default {
             'register'
         ]),
 
-        handleSubmit(event) {
+        async handleSubmit(event) {
             event.preventDefault()
 
             let data = this.getFormData()
@@ -93,7 +96,12 @@ export default {
                 this.goToStep(2)
             } else if (this.step == 2) {
                 delete data.confirmation
-                this.register(data)
+                const isRegistered = await this.register(data)
+                if(isRegistered) {
+                    this.toast('success', this.title, 'Votre compte a été créé avec succès !')
+                } else {
+                    this.toast('error', this.title, 'Oops ! Une erreur est survenue')
+                }
             }
         },
         
@@ -101,11 +109,11 @@ export default {
             switch (step) {
                 case 1:
                     this.step=1
-                    this.$refs['btn-continue'].innerHTML = 'Continuer'
+                    this.btnContinueTitle = 'Continuer'
                     break
                 case 2:
                     this.step=2
-                    this.$refs['btn-continue'].innerHTML = 'S\'inscrire'
+                    this.btnContinueTitle = 'S\'inscrire'
                     break
             }
         },
@@ -115,13 +123,13 @@ export default {
             switch (step) {
                 case 1:
 
-                    if (data.lastname === '') {
-                        this.formData.lastname.error = 'Champ obligatoire'
+                    if (data.lastName === '') {
+                        this.formData.lastName.error = 'Champ obligatoire'
                         valid = false
                     }
 
-                    if (data.firstname === '') {
-                        this.formData.firstname.error = 'Champ obligatoire'
+                    if (data.firstName === '') {
+                        this.formData.firstName.error = 'Champ obligatoire'
                         valid = false
                     }
 
@@ -181,7 +189,7 @@ export default {
             }
         },
     },
-    components: { EditText }
+    components: { EditText, Bouton }
 }
 </script>
 

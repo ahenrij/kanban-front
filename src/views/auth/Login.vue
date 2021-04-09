@@ -4,7 +4,7 @@
         <div>
             <!--Header-->
             <span class="uk-text-lead">Connectez-vous</span><br>
-            <span class="uk-text-light">Pour accéder à votre tableau de bord de gestion <br>de trésorerie</span>
+            <span class="uk-text-light">Pour accéder à votre espace de gestion de tableaux kanban <br>pour vos projets.</span>
             <notifications style="margin-right: 20px !important; margin-top: 150px  !important" group="auth" />
             <hr class="uk-width-3-3">
 
