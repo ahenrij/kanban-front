@@ -37,7 +37,7 @@ const actions = {
                     with: response.data
                 });
             }
-            return response.data;
+            return response;
         } catch (e) {
             if (e instanceof ReqError) {
                 commit('loadingError', { errorCode: e.errorCode, errorMessage: e.message })
