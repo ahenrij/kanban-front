@@ -26,3 +26,7 @@
     background-color: #cccccc;
     border: 2px solid #cccccc;
 }
+
+.uk-button, .uk-input {
+    border-radius: 5px;
+}

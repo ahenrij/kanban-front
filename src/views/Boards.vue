@@ -2,20 +2,24 @@
     <div>
         <h2>{{ title }}</h2>
 
+        <div uk-grid>
+            <div class="uk-width-2-3@s">
+                <!--input search here ?-->
+            </div>
+            <div class="uk-width-1-3@s">
+                <button class="uk-button uk-button-primary uk-float-right">Nouveau tableau</button>
+            </div>
+        </div>
 
         <notifications style="margin-right: 20px !important; margin-top: 150px  !important" group="data" />
 
         <!--main content-->
-        <div class="uk-child-width-1-5@s uk-grid-match" uk-grid>
-            <div v-for="board in boards" :key="board.id">
-                <board :key="board.id" :board="board" />
-            </div>
-        </div>
+        <board-list :boards="boards" title="Tableaux personnels"/>
     </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import Board from '@/components/boards/Board.vue'
+import BoardList from '@/components/boards/BoardList.vue'
 
 export default {
     
@@ -70,7 +74,7 @@ export default {
     },
 
     components: {
-        Board
+        BoardList
     }
 }
 </script>

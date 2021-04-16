@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <span class="uk-text-lead uk-text-notmal">KanbanApp</span><br>
-    <span class="uk-text-light" style="font-size: 1.2em;">version 1.0.O</span>
+    <span class="uk-text-light" style="font-size: 1.2em;">version 1.0.0</span>
     <p>Plateforme de gestion et de suivi de tâches kanban. <br> © Université de Rennes 1 - M1 MIAGE - 2021</p>
   </div>
 </template>
