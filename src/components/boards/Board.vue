@@ -49,7 +49,7 @@ export default {
 
     .uk-card {
         border-radius: 6px;
-        padding: 23px;
+        padding: 26px;
     }
 
     .uk-card-title {
