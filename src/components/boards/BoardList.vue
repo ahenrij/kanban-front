@@ -17,6 +17,9 @@ export default {
         title: String,
         boards: Array
     },
+    data() {
+        return {}
+    },
     components: {
         Board
     }

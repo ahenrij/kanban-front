@@ -1,20 +1,19 @@
 <template>
     <div class="uk-card uk-card-default uk-card-body" :style="{'--bg-color-hover': board.color }">
 
-        <h4 class="uk-card-title uk-margin-small-bottom">{{ board.title }}</h4>
+        <h4 class="uk-card-title uk-margin-small-bottom">{{ board.title.length > 17 ? board.title.substring(0, 13) + '...' : board.title }}</h4>
 
         <div class="subtitle">
             <span :uk-icon="'icon: ' + visibility_icon + '; ratio: .8'"></span>
             <span class="uk-text-small uk-margin-small-left">{{ visibility }}</span>
         </div>
 
-        <br><br><br><br>
+        <br><br><br><br><br><br>
         
         <div class="subtitle">
             <a href="" uk-icon="icon: pencil; ratio:1.1" class="uk-float-right" style="cursor: pointer"></a>
             <a href="" uk-icon="icon: trash; ration:1.1" class="uk-float-right" style="cursor: pointer"></a>
         </div>
-
     </div>
 </template>
 <script>
@@ -50,6 +49,7 @@ export default {
 
     .uk-card {
         border-radius: 6px;
+        padding: 23px;
     }
 
     .uk-card-title {
