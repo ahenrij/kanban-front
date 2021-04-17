@@ -105,6 +105,7 @@ export default {
         
             if (this.isValid(data)) {
                 let id = (this.board) ? this.board.id : 0
+                data.id = id
                 this.postData(data, id)
             }
         },
@@ -112,9 +113,11 @@ export default {
         postData: async function (data, id = 0) {
 
             var payload = {
-                requestData: { method: (id > 0) ? 'put' : 'post', url: this.url + ((id > 0) ? "/" + id : ""), data: data },
+                requestData: { method: (id > 0) ? 'put' : 'post', url: this.url, data: data },
                 commit: false,
             }
+
+            console.log(payload)
 
             // eslint-disable-next-line no-unreachable
             let response = await this.makeRequest(payload)

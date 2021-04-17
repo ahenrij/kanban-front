@@ -1,7 +1,7 @@
 <template>
     <div class="uk-card uk-card-default uk-card-body" :style="{'--bg-color-hover': board.color }">
 
-        <h4 class="uk-card-title uk-margin-small-bottom">{{ board.title.length > 17 ? board.title.substring(0, 13) + '...' : board.title }}</h4>
+        <h4 class="uk-card-title uk-margin-small-bottom" :title="board.title">{{ board.title.length > 17 ? board.title.substring(0, 13) + '...' : board.title  }}</h4>
 
         <div class="subtitle">
             <span :uk-icon="'icon: ' + visibility_icon + '; ratio: .8'"></span>
@@ -11,8 +11,8 @@
         <br><br><br><br><br><br>
         
         <div class="subtitle">
-            <a href="" uk-icon="icon: pencil; ratio:1.1" class="uk-float-right" style="cursor: pointer"></a>
-            <a href="" uk-icon="icon: trash; ration:1.1" class="uk-float-right" style="cursor: pointer"></a>
+            <span uk-icon="icon: pencil; ratio:1.1" class="uk-float-right" @click="edit(board.id)"></span>
+            <span href="#" uk-icon="icon: trash; ration:1.1" class="uk-float-right" @click="remove(board.id)"></span>
         </div>
     </div>
 </template>
@@ -31,6 +31,17 @@ export default {
 
         visibility_icon() {
             return this.board.private ? 'lock' : 'world'
+        }
+    },
+
+    methods: {
+
+        edit(id) {
+            this.$emit('edit', id)
+        },
+
+        remove(id) {
+            this.$emit('remove', id)
         }
     }
 }
