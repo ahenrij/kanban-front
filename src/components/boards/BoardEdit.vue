@@ -1,7 +1,7 @@
 <template>
     <div uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
-            <p class="uk-text-lead">Nouveau tableau <span :uk-icon="'icon: ' + visibility_icon + '; ratio: 1'"></span></p>
+            <p class="uk-text-lead">{{ formTitle }} <span :uk-icon="'icon: ' + visibilityIcon + '; ratio: 1'"></span></p>
             <div>
                 <form action="#!">
 
@@ -75,8 +75,12 @@ export default {
             'loading', 'get'
         ]),
 
-        visibility_icon() {
+        visibilityIcon() {
             return this.formData.private.value ? 'lock' : 'world'
+        },
+
+        formTitle() {
+            return (this.formData.title.value == '') ? (this.board ? '' : 'Nouveau') : this.formData.title.value
         }
     },
 
