@@ -1,5 +1,5 @@
 <template>
-    <div class="uk-card uk-card-default uk-card-body" :style="{'--bg-color-hover': board.color }">
+    <div @click="$emit('onClicked')" class="uk-card uk-card-default uk-card-body" :style="{'--bg-color-hover': board.color }">
 
         <h4 class="uk-card-title uk-margin-small-bottom" :title="board.title">{{ board.title.length > 17 ? board.title.substring(0, 13) + '...' : board.title  }}</h4>
 
@@ -11,8 +11,8 @@
         <br><br><br><br><br><br>
         
         <div class="subtitle">
-            <span uk-icon="icon: pencil; ratio:1.1" class="uk-float-right" @click="edit(board.id)"></span>
-            <span href="#" uk-icon="icon: trash; ration:1.1" class="uk-float-right" @click="remove(board.id)"></span>
+            <span uk-icon="icon: pencil; ratio:1.1" class="uk-float-right" @click="edit($event, board.id)"></span>
+            <span href="#" uk-icon="icon: trash; ration:1.1" class="uk-float-right" @click="remove($event, board.id)"></span>
         </div>
     </div>
 </template>
@@ -36,11 +36,13 @@ export default {
 
     methods: {
 
-        edit(id) {
+        edit(event, id) {
+            event.stopPropagation()
             this.$emit('edit', id)
         },
 
-        remove(id) {
+        remove(event, id) {
+            event.stopPropagation()
             this.$emit('remove', id)
         }
     }
