@@ -88,7 +88,7 @@ export default {
 
         open: function(board) {
             let id = board.id
-            router.push({ name: 'Board', params: { id } })
+            router.push({ name: 'Board', params: { id, board }, query: { id, board } })
         },
 
         add: function() {
