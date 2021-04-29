@@ -27,6 +27,6 @@
     border: 2px solid #cccccc;
 }
 
-.uk-button, .uk-input {
+.uk-button, .uk-input, .uk-textarea {
     border-radius: 5px;
 }

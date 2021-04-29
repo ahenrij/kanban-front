@@ -9,9 +9,13 @@
                         <div class="uk-width-1-1@s">
                             <edit-text title="Titre" name="title" icon="tag" type="text" v-on:input="resetErrors()" 
                             :error="formData.title.error" v-model="formData.title.value" required></edit-text>
+
+                            <text-area title="Description" name="title" type="text" v-on:input="resetErrors()" 
+                            :error="formData.description.error" v-model="formData.description.value" :rows="3" :max="500"></text-area>
                         </div>
                     </div>
 
+                    <br>
                     <div class="uk-margin-small-top" uk-grid>
                         <div class="uk-width-1-1@s">
                             <v-swatches v-model="formData.color.value" popover-x="right"></v-swatches>
@@ -43,6 +47,7 @@
 <script>
 import Bouton from '@/components/utils/Bouton.vue'
 import EditText from '@/components/utils/EditText.vue'
+import TextArea from '@/components/utils/TextArea.vue'
 import VSwatches from 'vue-swatches'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -64,6 +69,7 @@ export default {
             primaryColor: '#448AFF',
             formData: {
                 title: { value: '', error: '' },
+                description: { value: '', error: '' },
                 color: { value: '#448AFF', error: '' },
                 private: { value: false, error: '' }
             }
@@ -106,6 +112,7 @@ export default {
             event.preventDefault()
 
             var data = this.getFormData()
+            console.log(data)
         
             if (this.isValid(data)) {
                 let id = (this.board) ? this.board.id : 0
@@ -180,7 +187,7 @@ export default {
             this.$notify({ group: 'data', title: title, type: type, text: message });
         }
     },
-    components: { Bouton, EditText , VSwatches}
+    components: { Bouton, EditText, TextArea, VSwatches}
 }
 </script>
 <style scoped>
