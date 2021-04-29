@@ -11,27 +11,15 @@
             </div>
         </div>
 
-        <board-edit :board="board" :url="baseUrl" @reload="loadData" :title="title" :id="modalName"/>
         <notifications style="margin-right: 20px !important; margin-top: 150px  !important" group="data" />
 
         <!--main content-->
         <div class="uk-margin-top">
-            <h5>Tableaux personnels</h5>
-            <div v-if="boards.length > 0" class="uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-6@l uk-grid-match" uk-grid>
-                <div v-for="board in boards" :key="board.id">
-                    <board-item :key="board.id" :board="board" @onClicked="open(board)" @edit="edit" @remove="remove" />
-                </div>
-            </div>
-            <div v-else>
-                <br>
-                <p class="uk-text-center" style="color: gray !important">Créez un nouveau tableau dès maintenant en cliquant le bouton !</p>
-            </div>
+            <div>Board's content</div>
         </div>
     </div>
 </template>
 <script>
-import BoardItem from '@/components/boards/BoardItem.vue'
-import BoardEdit from '@/components/boards/BoardEdit.vue'
 import Bouton from '@/components/utils/Bouton.vue'
 import UIkit from 'uikit'
 import { mapGetters, mapActions } from 'vuex'
@@ -135,7 +123,7 @@ export default {
     },
 
     components: {
-        BoardItem, BoardEdit, Bouton
+       Bouton
     }
 }
 </script>
