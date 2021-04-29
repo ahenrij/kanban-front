@@ -35,7 +35,7 @@ import BoardEdit from '@/components/boards/BoardEdit.vue'
 import Bouton from '@/components/utils/Bouton.vue'
 import UIkit from 'uikit'
 import { mapGetters, mapActions } from 'vuex'
-
+import router from '@/router'
 
 export default {
     
@@ -87,7 +87,8 @@ export default {
         },
 
         open: function(board) {
-            alert('Open board ' + board.title)
+            let id = board.id
+            router.push({ name: 'Board', params: { id } })
         },
 
         add: function() {
