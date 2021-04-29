@@ -80,7 +80,7 @@ const routes = [
     }
   },
   {
-    path: '/board/:id',
+    path: '/board',
     name: 'Board',
     component: Board,
     meta: {

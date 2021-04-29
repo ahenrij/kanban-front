@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h3>{{ $route.query.id }}</h3>
+    <h3 class="uk-text-bold">{{ board ? board.title : "Tableau" }}</h3>
+
 
     <notifications
       style="margin-right: 20px !important; margin-top: 150px !important"
@@ -18,30 +19,30 @@
           :drop-placeholder="upperDropPlaceholderOptions"
         >
           <div uk-grid>
-              <Draggable v-for="column in sections" :key="column.id">
-            <div class="uk-card uk-card-default uk-card-body">
-              <div class="card-column-header">
-                <span class="column-drag-handle">&#x2630;</span>
-                {{ column.title }}
+            <Draggable v-for="column in sections" :key="column.id">
+              <div class="uk-card uk-card-default uk-card-body">
+                <div class="card-column-header">
+                  <span class="column-drag-handle">&#x2630;</span>
+                  {{ column.title }}
+                </div>
+                <Container
+                  group-name="col"
+                  @drop="(e) => onCardDrop(column.id, e)"
+                  @drag-start="(e) => log('drag start', e)"
+                  @drag-end="(e) => log('drag end', e)"
+                  :get-child-payload="getCardPayload(column.id)"
+                  drag-class="card-ghost"
+                  drop-class="card-ghost-drop"
+                  :drop-placeholder="dropPlaceholderOptions"
+                >
+                  <Draggable v-for="card in column.cards" :key="card.id">
+                    <div class="uk-card uk-card-primary uk-card-body">
+                      <p>{{ card.label }}</p>
+                    </div>
+                  </Draggable>
+                </Container>
               </div>
-              <Container
-                group-name="col"
-                @drop="(e) => onCardDrop(column.id, e)"
-                @drag-start="(e) => log('drag start', e)"
-                @drag-end="(e) => log('drag end', e)"
-                :get-child-payload="getCardPayload(column.id)"
-                drag-class="card-ghost"
-                drop-class="card-ghost-drop"
-                :drop-placeholder="dropPlaceholderOptions"
-              >
-                <Draggable v-for="card in column.cards" :key="card.id">
-                  <div class="uk-card uk-card-primary uk-card-body">
-                    <p>{{ card.label }}</p>
-                  </div>
-                </Draggable>
-              </Container>
-            </div>
-          </Draggable>
+            </Draggable>
           </div>
         </Container>
       </div>
@@ -68,7 +69,7 @@ export default {
   data() {
     return {
       boardId: this.$route.query.id,
-      baseUrl: "/api/board/" + this.$route.query.board.id + "/section",
+      baseUrl: "/api/board/" + this.$route.query.id + "/section",
       sections: [
         {
           id: 13,
@@ -114,8 +115,8 @@ export default {
           cards: [],
         },
       ],
-      board: this.$route.query.board,
-      boards: null,
+      board: null,
+      boards: [],
 
       upperDropPlaceholderOptions: {
         className: "cards-drop-preview",
@@ -137,6 +138,7 @@ export default {
   async mounted() {
     this.boards = this.get("boards");
     this.board = this.getBoard(this.boardId);
+    console.log(this.board)
     this.loadData();
   },
 
@@ -166,7 +168,7 @@ export default {
     },
 
     saveBoard: function() {
-      console.log("Saving board sections")
+      console.log("Saving board sections");
     },
 
     remove: async function(id) {
@@ -213,7 +215,7 @@ export default {
 
     getBoard: function(id) {
       return this.boards.find(function(board) {
-        return board.id === id;
+        return board.id == id;
       });
     },
 
@@ -225,11 +227,11 @@ export default {
     onColumnDrop(dropResult) {
       let scene = Object.assign({}, this.sections);
       scene = applyDrag(scene, dropResult);
-      this.sections = scene;    
+      this.sections = scene;
     },
     onCardDrop(columnId, dropResult) {
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-        const scene = [...this.sections]
+        const scene = [...this.sections];
         const column = scene.filter((p) => p.id === columnId)[0];
         const columnIndex = scene.indexOf(column);
         const newColumn = Object.assign({}, column);
@@ -240,9 +242,7 @@ export default {
     },
     getCardPayload(columnId) {
       return (index) => {
-        return this.sections.filter((p) => p.id === columnId)[0].cards[
-          index
-        ];
+        return this.sections.filter((p) => p.id === columnId)[0].cards[index];
       };
     },
     dragStart() {

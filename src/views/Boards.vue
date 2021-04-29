@@ -17,7 +17,7 @@
         <!--main content-->
         <div class="uk-margin-top">
             <h5>Tableaux personnels</h5>
-            <div v-if="boards.length > 0" class="uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-6@l uk-grid-match" uk-grid>
+            <div v-if="boards.length > 0" class="uk-child-width-1-3@s uk-child-width-1-4@l uk-child-width-1-6@xl uk-grid-match" uk-grid>
                 <div v-for="board in boards" :key="board.id">
                     <board-item :key="board.id" :board="board" @onClicked="open(board)" @edit="edit" @remove="remove" />
                 </div>
@@ -88,7 +88,7 @@ export default {
 
         open: function(board) {
             let id = board.id
-            router.push({ name: 'Board', params: { id, board }, query: { id, board } })
+            router.push({ name: 'Board', query: { id } })
         },
 
         add: function() {
