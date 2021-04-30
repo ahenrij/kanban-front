@@ -12,7 +12,7 @@
         </div>
 
         <div class="uk-margin-top">
-
+            <div class="uk-text-center">Aucune donnée disponible !</div>
         </div>
     </div>
 </template>
