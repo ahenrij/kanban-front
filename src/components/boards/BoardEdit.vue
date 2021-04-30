@@ -95,7 +95,6 @@ export default {
         // eslint-disable-next-line no-unused-vars
         board: function(newBoard, oldBoard) {
             this.setFormData(newBoard)
-            console.log(this.formData.description.value)
             this.resetErrors()
             if (!newBoard) {
                 this.formData.private.value = false
