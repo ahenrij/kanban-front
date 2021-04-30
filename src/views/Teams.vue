@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <div class="uk-margin-top">
+        <div class="uk-margin-large-top">
             <div class="uk-text-center">Aucune donnée disponible !</div>
         </div>
     </div>
