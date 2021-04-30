@@ -18,7 +18,9 @@
             </div>
             <div v-else>
                 <ul class="uk-navbar-nav uk-visible@m uk-margin-right">
-                    <li><router-link class="logout" to="/logout" uk-icon="icon: sign-out"></router-link></li>
+                    <li>
+                        <span class="notif" uk-icon="icon: bell"></span>
+                    </li>
                 </ul>
             </div>
             
@@ -96,8 +98,9 @@ export default {
         font-size: 1.1em;
     }
 
-    .logout:hover {
-        color: #E91E63;
+    .notif {
+       color: white;
+       cursor: pointer;
     }
     
     @media only screen and (max-width: 640px) {

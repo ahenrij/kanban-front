@@ -1,7 +1,7 @@
 <template>
     <div class="sidenav uk-card uk-card-default uk-card-body uk-padding-remove uk-visible@m" style="">
 
-        <div class="uk-padding  info-block">
+        <div class="uk-padding info-block">
             <span class="uk-text-lead uk-display-block organization">{{ user.firstName }} {{ user.lastName | uppercase }}</span>
             <small class="">{{ user.email }}</small>
         </div>
@@ -13,7 +13,7 @@
                 
                 <li class="uk-nav-divider"></li>
                 <!--li :class="(this.$route.path == '/parameters' ? 'active' : '')"><router-link to="/parameters"><span class="uk-margin-small-right" uk-icon="icon: cog"></span> Paramètres</router-link></li-->
-                <li><router-link class="logout" to="/logout"><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span> Déconnexion</router-link></li>
+                <li><router-link class="logout uk-button uk-button-default" to="/logout"><span class="uk-margin-small-right" uk-icon="icon: sign-out; ratio: .8"></span> Déconnexion</router-link></li>
             </ul>
         </div>
     </div>
@@ -81,6 +81,21 @@ export default {
 
     .organization {
         font-size: 18px;
+    }
+
+    .logout {
+        width: 185px;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        font-size: 13px;
+        margin-left: 17px;
+    }
+
+    .logout:hover {
+        background: #FF5252;
+        border-color: #FF5252;
+        color: white;
+        transition: background-color .3s ease;
     }
 
 </style>
