@@ -1,6 +1,7 @@
 <template>
   <div>
     <h3 class="">{{ board ? board.title : "Tableau" }}</h3>
+    <router-link to="/boards">Retour aux tableaux</router-link>
 
     <notifications style="margin-right: 20px !important; margin-top: 150px !important" group="data"/>
 
@@ -47,7 +48,6 @@ import { fakeSections } from "@/utils/faker"
 
 import Bouton from "@/components/utils/Bouton.vue";
 import CardItem from "@/components/cards/CardItem.vue";
-import UIkit from "uikit";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -88,8 +88,7 @@ export default {
     loadData: async function() {
       const payload = {
         requestData: { method: "get", url: this.baseUrl },
-        commit: true,
-        stateProperty: this.stateProperty,
+        commit: false,
       };
 
       let response = await this.makeRequest(payload);
@@ -103,54 +102,14 @@ export default {
             : "Oops ! Une erreur est survenue"
         );
       } else {
-        this.boards = response.data;
+        //uncomment following line to get sections
+        //this.sections = response.data;
+        console.log(response.data)
       }
     },
 
     saveBoard: function() {
       console.log("Saving board sections");
-    },
-
-    remove: async function(id) {
-      var board = this.getBoard(id);
-      var self = this;
-      UIkit.modal
-        .confirm(
-          "<h3>" +
-            board.title +
-            "</h3> Ce tableau est susceptible de contenir des informations importantes qui seront supprimées. Êtes-vous sûr de vouloir le supprimer ?",
-          { labels: { cancel: "Annuler", ok: "Oui, supprimer" } }
-        )
-        .then(
-          async function() {
-            const payload = {
-              requestData: {
-                method: "delete",
-                url: self.baseUrl + "/" + board.id,
-                data: null,
-              },
-              commit: false,
-            };
-            let response = await self.makeRequest(payload);
-            if (!response) {
-              self.toast(
-                "error",
-                self.title,
-                self.get("loadingError")
-                  ? self.get("loadingError")
-                  : "Oops ! Une erreur est survenue"
-              );
-            } else {
-              self.loadData();
-              self.toast(
-                "success",
-                self.title,
-                "Opération effectuée avec succès !"
-              );
-            }
-          },
-          function() {}
-        );
     },
 
     getBoard: function(id) {
@@ -169,6 +128,7 @@ export default {
       scene = applyDrag(scene, dropResult);
       this.sections = scene;
     },
+
     onCardDrop(columnId, dropResult) {
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
         const scene = [...this.sections];
@@ -180,24 +140,24 @@ export default {
         this.sections = scene;
       }
     },
+
     getCardPayload(columnId) {
       return (index) => {
         return this.sections.filter((p) => p.id === columnId)[0].cards[index];
       };
     },
+
     dragStart() {
       console.log("drag started");
     },
+
     log(...params) {
       console.log(...params);
     },
   },
 
   components: {
-    Bouton,
-    CardItem,
-    Container,
-    Draggable,
+    Bouton, CardItem, Container, Draggable,
   },
 };
 </script>

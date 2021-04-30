@@ -96,7 +96,7 @@ export default {
             UIkit.modal('#'+this.modalName).show()
         },
 
-        edit: async function (id) {
+        edit: function (id) {
             var board = this.getBoard(id)
             if (board) {
                 this.board = board
@@ -126,7 +126,7 @@ export default {
 
         getBoard: function(id) {
             return this.boards.find(function(board) {
-                return board.id === id
+                return board.id == id
             })
         },
 

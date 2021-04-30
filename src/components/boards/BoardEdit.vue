@@ -112,8 +112,6 @@ export default {
             event.preventDefault()
 
             var data = this.getFormData()
-            console.log(data)
-        
             if (this.isValid(data)) {
                 let id = (this.board) ? this.board.id : 0
                 data.id = id
@@ -127,12 +125,8 @@ export default {
                 requestData: { method: (id > 0) ? 'put' : 'post', url: this.url, data: data },
                 commit: false,
             }
-
-            console.log(payload)
-
             // eslint-disable-next-line no-unreachable
             let response = await this.makeRequest(payload)
-
             if (!response) {
                 this.toast('error', this.title, this.get('loadingError') ? this.get('loadingError') : 'Oops ! Une erreur est survenue')
             } else {
@@ -149,14 +143,11 @@ export default {
         },
 
         isValid: function (data) {
-
             let valid = true
-
             if (data.title === '') {
                 this.formData.title.error = 'Champ obligatoire'
                 valid = false
             }
-
             return valid
         },
 
@@ -168,7 +159,6 @@ export default {
         },
 
         setFormData: function(data) {
-            
             for (const [index, value] of Object.entries(this.formData)) {
                 value.value = (data) ? data[index] : ''
             }
@@ -179,7 +169,6 @@ export default {
             for (const [index, value] of Object.entries(this.formData)) {
                 data[index] = value.value
             }
-
             return data
         },
 

@@ -32,7 +32,7 @@ export const fakeSections = [
             email: "aidasso.henri@gmail.com",
           },
           {
-            id: 1,
+            id: 2,
             firstName: "Octaviana",
             lastName: "Diaconu",
             email: "octaviana.diaconu@gmail.com",
@@ -47,7 +47,7 @@ export const fakeSections = [
     position: 2,
     cards: [
       {
-        id: 17,
+        id: 18,
         label: "Test API",
         deadline: 1616540400000,
         duration: 7,
@@ -76,7 +76,7 @@ export const fakeSections = [
         ],
       },
       {
-        id: 17,
+        id: 19,
         label: "Deploy API",
         deadline: 1616540400000,
         duration: 7,
@@ -117,7 +117,7 @@ export const fakeSections = [
     position: 3,
     cards: [
       {
-        id: 17,
+        id: 16,
         label: "Create API",
         deadline: 1616540400000,
         duration: 7,
