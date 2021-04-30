@@ -1,12 +1,15 @@
 <template>
     <div @click="$emit('onClicked')" class="uk-card uk-card-default uk-card-body" :style="{'--bg-color-hover': board.color }">
 
+
         <h4 class="uk-card-title uk-margin-small-bottom" :title="board.title">{{ board.title.length > 17 ? board.title.substring(0, 13) + '...' : board.title  }}</h4>
 
         <div class="subtitle">
             <span :uk-icon="'icon: ' + visibility_icon + '; ratio: .8'"></span>
             <span class="uk-text-small uk-margin-small-left">{{ visibility }}</span>
         </div>
+
+        <span uk-icon="icon: bookmark; ratio: 1.5" class="uk-position-top-right bookmark" :style="{'--color': board.color }"></span>
 
         <br><br><br><br><br><br>
         
@@ -67,5 +70,11 @@ export default {
 
     .uk-card-title {
         font-size: 1.3em;
+    }
+
+    .bookmark {
+        margin-right: 10px;
+        margin-top: -1.8px;
+        color: var(--color);
     }
 </style>
