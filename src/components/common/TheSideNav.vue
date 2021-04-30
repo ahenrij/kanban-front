@@ -10,6 +10,7 @@
             <ul class="uk-nav-default uk-nav-default uk-nav-parent-icon" uk-nav>
                 <li :class="(this.$route.path == '/' ? 'active' : '')"><router-link to="/"><span class="uk-margin-small-right" uk-icon="icon: home; ratio: .9"></span><span> Accueil</span></router-link></li>
                 <li :class="(['Boards', 'Board'].includes(this.$route.name) ? 'active' : '')"><router-link to="/boards"><span class="uk-margin-small-right" uk-icon="icon: thumbnails; ratio: .9"></span> Tableaux</router-link></li>
+                <li :class="(['Teams'].includes(this.$route.name) ? 'active' : '')"><router-link to="/teams"><span class="uk-margin-small-right" uk-icon="icon: users; ratio: .9"></span> Equipes</router-link></li>
                 
                 <li class="uk-nav-divider"></li>
                 <!--li :class="(this.$route.path == '/parameters' ? 'active' : '')"><router-link to="/parameters"><span class="uk-margin-small-right" uk-icon="icon: cog"></span> Paramètres</router-link></li-->
