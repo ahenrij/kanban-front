@@ -1,67 +1,52 @@
 <template>
   <div>
-    <h3 class="uk-text-bold">{{ board ? board.title : "Tableau" }}</h3>
+    <h3 class="">{{ board ? board.title : "Tableau" }}</h3>
 
-
-    <notifications
-      style="margin-right: 20px !important; margin-top: 150px !important"
-      group="data"
-    />
+    <notifications style="margin-right: 20px !important; margin-top: 150px !important" group="data"/>
 
     <!--main content-->
     <div class="uk-margin-top">
       <div class="card-scene">
-        <Container
-          orientation="horizontal"
-          @drop="onColumnDrop($event)"
-          drag-handle-selector=".column-drag-handle"
-          @drag-start="dragStart"
-          :drop-placeholder="upperDropPlaceholderOptions"
-        >
-          <div uk-grid>
-            <Draggable v-for="column in sections" :key="column.id">
-              <div class="uk-card uk-card-default uk-card-body">
-                <div class="card-column-header">
-                  <span class="column-drag-handle">&#x2630;</span>
-                  {{ column.title }}
-                </div>
-                <Container
-                  group-name="col"
-                  @drop="(e) => onCardDrop(column.id, e)"
-                  @drag-start="(e) => log('drag start', e)"
-                  @drag-end="(e) => log('drag end', e)"
-                  :get-child-payload="getCardPayload(column.id)"
-                  drag-class="card-ghost"
-                  drop-class="card-ghost-drop"
-                  :drop-placeholder="dropPlaceholderOptions"
-                >
-                  <Draggable v-for="card in column.cards" :key="card.id">
-                    <div class="uk-card uk-card-primary uk-card-body">
-                      <p>{{ card.label }}</p>
+        <Container orientation="horizontal"
+            @drop="onColumnDrop($event)"
+            drag-handle-selector=".column-drag-handle"
+            @drag-start="dragStart"
+            :drop-placeholder="upperDropPlaceholderOptions">
+                <Draggable v-for="column in sections" :key="column.id">
+                    <div class="uk-card section card-container">
+                        <div class="card-column-header">
+                            <span class="column-drag-handle">&#x2630;</span>
+                            {{ column.title }}
+                        </div>
+                        <Container group-name="col"
+                            @drop="(e) => onCardDrop(column.id, e)"
+                            @drag-start="(e) => log('drag start', e)"
+                            @drag-end="(e) => log('drag end', e)"
+                            :get-child-payload="getCardPayload(column.id)"
+                            drag-class="card-ghost"
+                            drop-class="card-ghost-drop"
+                            :drop-placeholder="dropPlaceholderOptions">
+                            <Draggable v-for="card in column.cards" :key="card.id">
+                                <card-item :card="card"/>
+                            </Draggable>
+                        </Container>
                     </div>
-                  </Draggable>
-                </Container>
-              </div>
-            </Draggable>
-          </div>
+                </Draggable>
         </Container>
       </div>
     </div>
     <div>
-      <bouton
-        title="Enregistrer"
-        class="uk-float-right"
-        @onClicked="saveBoard"
-        primary
-      />
+      <bouton title="Enregistrer" class="uk-float-right uk-margin-large-top" @onClicked="saveBoard" primary/>
     </div>
   </div>
 </template>
 <script>
 import { Container, Draggable } from "vue-smooth-dnd";
 import { applyDrag } from "@/utils/helpers";
+import { fakeSections } from "@/utils/faker"
 
 import Bouton from "@/components/utils/Bouton.vue";
+import CardItem from "@/components/cards/CardItem.vue";
 import UIkit from "uikit";
 import { mapGetters, mapActions } from "vuex";
 
@@ -70,51 +55,7 @@ export default {
     return {
       boardId: this.$route.query.id,
       baseUrl: "/api/board/" + this.$route.query.id + "/section",
-      sections: [
-        {
-          id: 13,
-          title: "To Do",
-          position: 1,
-          cards: [],
-        },
-        {
-          id: 14,
-          title: "On Going...",
-          position: 2,
-          cards: [
-            {
-              id: 17,
-              label: "Fifth task (edited)",
-              deadline: 1616540400000,
-              duration: 7,
-              place: "",
-              url: "",
-              description: "Third task on going but changed...",
-              tags: [
-                {
-                  id: 10,
-                  name: "Test",
-                  color: "#536DFE",
-                },
-              ],
-              assignees: [
-                {
-                  id: 1,
-                  firstName: "Henri",
-                  lastName: "Aïdasso",
-                  email: "aidasso.henri@gmail.com",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: 15,
-          title: "Done",
-          position: 3,
-          cards: [],
-        },
-      ],
+      sections: fakeSections,
       board: null,
       boards: [],
 
@@ -138,7 +79,6 @@ export default {
   async mounted() {
     this.boards = this.get("boards");
     this.board = this.getBoard(this.boardId);
-    console.log(this.board)
     this.loadData();
   },
 
@@ -225,7 +165,7 @@ export default {
 
     // Draggable
     onColumnDrop(dropResult) {
-      let scene = Object.assign({}, this.sections);
+      let scene = [...this.sections]
       scene = applyDrag(scene, dropResult);
       this.sections = scene;
     },
@@ -255,9 +195,72 @@ export default {
 
   components: {
     Bouton,
+    CardItem,
     Container,
     Draggable,
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+    .section {
+        border: 1px dashed darkgrey;
+        background-color: #ffffff;
+        border-radius: 3px;
+        padding: 20px;
+        margin-right: 15px;
+        width: 350px;
+    }
+
+    .card-column-header {
+        margin-bottom: 20px !important;
+    }
+
+    .column-drag-handle {
+        margin-right: 5px;
+    }
+
+    .smooth-dnd-container.vertical > .smooth-dnd-draggable-wrapper {
+        overflow: visible !important;
+    }
+
+    .column-drag-handle {
+        cursor: move !important;
+    }
+
+    .drop-preview {
+        background-color: rgba(150, 150, 200, 0.1);
+        border: 1px dashed #abc;
+        margin: 5px;
+    }
+
+    .cards-drop-preview {
+        background-color: rgba(150, 150, 200, 0.1);
+        border: 1px dashed #abc;
+        margin: 5px 45px 5px 5px;
+    }
+
+    .card-ghost {
+        transition: transform 0.18s ease;
+        transform: rotateZ(5deg)
+    }
+
+    .card-ghost-drop {
+        transition: transform 0.18s ease-in-out;
+        transform: rotateZ(0deg)
+    }
+
+    .opacity-ghost {
+        transition: all .18s ease;
+        opacity: 0.8;
+        /* transform: rotateZ(5deg); */
+        background-color: cornflowerblue;
+        box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .opacity-ghost-drop {
+        opacity: 1;
+        /* transform: rotateZ(0deg); */
+        background-color: white;
+        box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.0);
+    }
+</style>
