@@ -7,11 +7,12 @@
 
                     <div uk-grid>
                         <div class="uk-width-1-1@s">
-                            <edit-text title="Titre" name="title" icon="tag" type="text" v-on:input="resetErrors()" 
+                            <edit-text title="Titre" id="title" name="title" icon="tag" type="text" v-on:input="resetErrors()" 
                             :error="formData.title.error" v-model="formData.title.value" required></edit-text>
 
-                            <text-area title="Description" name="title" type="text" v-on:input="resetErrors()" 
+                            <text-area title="Description" id="desc" name="desc" v-on:input="resetErrors()" 
                             :error="formData.description.error" v-model="formData.description.value" :rows="3" :max="500"></text-area>
+                        
                         </div>
                     </div>
 
@@ -94,6 +95,7 @@ export default {
         // eslint-disable-next-line no-unused-vars
         board: function(newBoard, oldBoard) {
             this.setFormData(newBoard)
+            console.log(this.formData.description.value)
             this.resetErrors()
             if (!newBoard) {
                 this.formData.private.value = false
