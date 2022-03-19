@@ -40,7 +40,7 @@ export default {
 
         return {
             defaultNavbarClass: 'uk-navbar-nav',
-            title: 'KanbanApp'
+            title: 'Kanban Board'
         }
     },
 
