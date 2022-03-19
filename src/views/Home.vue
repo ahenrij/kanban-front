@@ -5,11 +5,11 @@
       <div class="uk-flex uk-flex-middle uk-flex-last@s">
           <img src="@/assets/images/scrum_board.svg" alt="Kanban Board">
       </div>
-      <div class="uk-flex uk-flex-middle">
-          <div class="catching-block">
+      <div class="uk-flex uk-flex-center uk-flex-middle">
+          <div class="catching-block uk-text-center uk-text-left@m">
             <h1 style="font-family: Quicksand">Application Kanban</h1>
             <h2 class="catching-text uk-text-light">Gérez efficacement vos tâches et <br>Assurez un meilleur suivi de vos projets</h2>
-            <bouton-router to="/register" title="Commencer" class="uk-margin-right" primary></bouton-router>
+            <bouton-router to="/register" title="Commencer" class="margin-right-m" primary></bouton-router>
             <bouton-router to="/about" title="A propos"></bouton-router>
           </div>
       </div>
@@ -50,6 +50,14 @@ export default {
   @media only screen and (max-width: 640px)  {
     .home {
       padding-top: 80px
+    }
+  }
+  @media only screen and (min-width: 960px) {
+    .catching-block {
+      margin-left: 45px !important;
+    }
+    .margin-right-m {
+      margin-right: 12px;
     }
   }
 </style>
